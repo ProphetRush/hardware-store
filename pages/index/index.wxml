@@ -1,0 +1,11 @@
+<!--index.wxml-->
+<view class="container" >
+  <view class="imgLayer">
+    <view class="scanButton">
+      <button class='scanQRCodeButton' hover-class='scanQRCodeButtonHover' catchtap='scanQRCode'>
+        <image src="/images/scanQRCode.png"></image>
+        <text style='color: white;'>扫码出货</text>
+      </button>
+    </view>
+  </view>
+</view>

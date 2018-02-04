@@ -1,0 +1,8 @@
+<view class="container">
+  <view class="textContainer">
+    <text class="textStyle">{{text}}</text>
+    <navigator url="/pages/ProductManagement/Selling/Selling" hover-class="navigator-hover">
+              出货
+            </navigator>
+  </view>
+</view>

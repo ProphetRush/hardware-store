@@ -1,0 +1,108 @@
+page{
+  height: 100%;
+}
+
+.container {
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.doc-title{
+  position: relative;
+  padding: 20px 0;
+  margin: 10px 15px;
+  line-height: 24px;
+  font-size: 22px;
+  color: #666;
+  text-align: left;
+  width: 50%;
+  padding-left: 40px;
+}
+
+.doc_sub_title{
+    font-size:14px;
+    color:#666;
+    padding-left:40px;
+    padding-bottom:10px;
+
+}
+
+.addBtnHover{
+  background: #f1f1f1;
+}
+
+.addBtn{
+  width: 100rpx;
+  height: 100rpx;
+  border: 1rpx solid #ccc;
+  border-radius: 50%;
+  color:#ccc;
+  margin-left: 80rpx;
+  text-align: center;
+  font-size: 30px;
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+button::after{
+  border: none;
+}
+
+.zan-panel::after{
+  border-top-width: 0;
+  z-index: 2;
+}
+
+.zan-panel{
+  margin:0;
+}
+
+.zan-card{
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  z-index: 2;
+  background: white;
+  transition: left 0.2s ease-in-out;
+}
+
+
+
+.billingBox{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 100rpx;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  border-bottom:1px solid #eee;
+  border-top:1px solid #eee;
+  background-color: #fff;
+  z-index: 3;
+}
+
+.billingBox .to-pay-btn{
+  width:40%;
+  text-align: center;
+  line-height: 100rpx;
+  background-color: #e64340;
+  font-size:32rpx;
+  color:#ffffff;
+
+}
+
+.billingBox  .left-price{
+  width: 60%;
+  text-align: center;
+  justify-content: space-between;
+  line-height: 100rpx;
+  font-size:40rpx;
+  box-sizing: border-box;
+  color: #e64340;
+  font-weight: bold;
+}

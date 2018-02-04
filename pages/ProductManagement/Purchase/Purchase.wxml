@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="navbar">
+    <view class="zan-row" style="height: 100%;">
+      <view class="zan-col zan-col-8 navcell">
+          <view class='nav-item'>
+            <navigator url="/pages/ProductManagement/Selling/Selling" open-type='redirect' hover-class="navigator-hover">
+              出货
+            </navigator>
+          </view>
+      </view>
+      <view class="zan-col zan-col-8 navcell">
+        <view class='nav-item nav-item-on'>
+          <navigator url="/pages/ProductManagement/Purchase/Purchase" open-type='redirect' hover-class="navigator-hover">
+              采购/入库
+            </navigator>
+        </view>
+      </view>
+      <view class="zan-col zan-col-8 navcell">
+        <view class='nav-item'>
+          <navigator url="/pages/ProductManagement/ProductInfo/ProductInfo" open-type='redirect' hover-class="navigator-hover">
+              库存信息
+            </navigator>
+        </view>
+      </view>
+    </view>    
+  </view>
+</view>

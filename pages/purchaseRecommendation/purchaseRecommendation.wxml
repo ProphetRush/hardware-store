@@ -1,0 +1,124 @@
+<import src="/zanui/stepper/index.wxml"/>
+
+<view class="container">
+    <view class='container' style='padding-bottom:120rpx;'>
+        <view class='zan-row' style='width:100%; display:flex'>
+            <view class="doc-title zan-hairline--bottom">推荐采购</view>
+            <button class="addBtn" catchtap='addCustomItem' hover-class='addBtnHover'>+</button>
+        </view>
+        <view class="doc_sub_title zan-hairline--bottom">库存不足</view>
+        <view class='container' style="background:#fff;border:0 solid #e5e5e5">
+            <view class="zan-panel" wx:for="{{stockLacking}}" wx:key="id" wx:for-item="item" wx:for-index="index">
+                <view class="zan-card" id="{{item.id}}" data-index="{{index}}">
+                    <view class="zan-card__thumb" style='background:#d8d8d8'>
+                        <image class="zan-card__img" src='{{item.imageURL}}' mode='aspectFit'></image>
+                    </view>
+                    <view class="zan-card__detail" style="padding-left:10px">
+                        <view class="zan-card__detail-row" style="margin-bottom:10px;font-size:16px">
+                            <view class="zan-card__right-col" style='color:#e64340; font-weight:bold;'>
+                                仅剩{{item.stock}}件
+                            </view>
+                            <view class="zan-card__left-col zan-ellipsis--l2">
+                                {{item.name}}
+                            </view>
+                        </view>
+                        <view class="zan-card__detail-row zan-c-gray-darker">
+                            <view class="zan-card__left-col" style="font-size:12px">
+                                商品编号： {{item.id}}
+                            </view>
+                        </view>
+                        <view class="zan-card__detail-row zan-c-gray-darker">
+                            <view class="zan-card__right-col">
+                                <template is="zan-stepper"
+                                          data="{{ stepper: itemStepper['item'+item.id] ,min: 0,max: 1000, componentId: item.id }}"/>
+                            </view>
+                            <view class="zan-card__left-col" style="margin-top:5px; font-size:12px" >
+                                采购价： ￥{{item.purchasePrice}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <view class="doc_sub_title zan-hairline--bottom" style="padding-top:10px">店铺热卖</view>
+        <view class='container' style="background:#fff;border:0 solid #e5e5e5">
+            <view class="zan-panel" wx:for="{{hotSales}}" wx:key="id" wx:for-item="item" wx:for-index="index">
+                <view class="zan-card" id="{{item.id}}" data-index="{{index}}">
+                    <view class="zan-card__thumb" style='background:#d8d8d8'>
+                        <image class="zan-card__img" src='{{item.imageURL}}' mode='aspectFit'></image>
+                    </view>
+                    <view class="zan-card__detail" style="padding-left:10px">
+                        <view class="zan-card__detail-row" style="margin-bottom:10px;font-size:18px">
+                            <view class="zan-card__right-col" style='color:#e64340; font-weight:bold;'>
+                                还剩{{item.stock}}件
+                            </view>
+                            <view class="zan-card__left-col zan-ellipsis--l2">
+                                {{item.name}}
+                            </view>
+                        </view>
+                        <view class="zan-card__detail-row zan-c-gray-darker">
+                            <view class="zan-card__left-col"  style="font-size:12px">
+                                商品编号： {{item.id}}
+                            </view>
+                        </view>
+                        <view class="zan-card__detail-row zan-c-gray-darker">
+                            <view class="zan-card__right-col">
+                                <template is="zan-stepper"
+                                          data="{{ stepper: itemStepper['item'+item.id] ,min: 0,max: 1000, componentId: item.id }}"/>
+                            </view>
+                            <view class="zan-card__left-col" style="margin-top:5px; font-size:12px">
+                                采购价： ￥{{item.purchasePrice}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+
+        <view class="doc_sub_title zan-hairline--bottom" style="{{hasCustomItem===true?'':'display:none'}}">自定义</view>
+        <view class='container' style="background:#fff;border:0 solid #e5e5e5">
+            <view class="zan-panel" wx:for="{{customItems}}" wx:key="id" wx:for-item="item" wx:for-index="index">
+                <view class="zan-card" id="{{item.id}}" data-index="{{index}}">
+                    <view class="zan-card__thumb" style='background:#d8d8d8'>
+                        <image class="zan-card__img" src='{{item.imageURL}}' mode='aspectFit'></image>
+                    </view>
+                    <view class="zan-card__detail" style="padding-left:10px">
+                        <view class="zan-card__detail-row" style="margin-bottom:10px;font-size:18px">
+                            <view class="zan-card__right-col" style='color:#e64340; font-weight:bold;'>
+                                仅剩{{item.stock}}件
+                            </view>
+                            <view class="zan-card__left-col zan-ellipsis--l2">
+                                {{item.name}}
+                            </view>
+                        </view>
+                        <view class="zan-card__detail-row zan-c-gray-darker">
+                            <view class="zan-card__left-col"  style="font-size:12px">
+                                商品编号： {{item.id}}
+                            </view>
+                        </view>
+                        <view class="zan-card__detail-row zan-c-gray-darker">
+                            <view class="zan-card__right-col">
+                                <template is="zan-stepper"
+                                          data="{{ stepper: itemStepper['item'+item.id] ,min: 0,max: 1000, componentId: item.id }}"/>
+                            </view>
+                            <view class="zan-card__left-col" style="margin-top:5px; font-size:12px">
+                                采购价： ￥{{item.purchasePrice}}
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+
+    </view>
+
+    <view class="billingBox">
+        <view class="left-price">
+            <text style='font-weight:bold;font-size:36rpx;margin-right:30px;color:#5b5b5b;line-height:100rpx;'>合计:</text>¥ {{totalPrice}}
+        </view>
+        <view class="to-pay-btn" bindtap="toOrderStatement">结算</view>
+    </view>
+</view>

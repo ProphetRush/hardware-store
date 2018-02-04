@@ -1,0 +1,43 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/purchaseRecommendation/purchaseRecommendation",
+    "pages/storeInfo/storeInfo",
+    "pages/ProductManagement/Selling/Selling",
+    "pages/ProductManagement/ProductInfo/ProductInfo",
+    "pages/ProductManagement/Purchase/Purchase"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "汇五金",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "backgroundColor": "#F7F7FA",
+    "color": "#a9b7b7",
+    "selectedColor": "#11cd6e",
+    "borderStyle": "white",
+    "list": [
+      {
+        "selectedIconPath": "images/icon-index-2.png",
+        "iconPath": "images/icon-index.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "images/icon-cart-2.png",
+        "iconPath": "images/icon-cart.png",
+        "pagePath": "pages/purchaseRecommendation/purchaseRecommendation",
+        "text": "推荐采购"
+      },
+      {
+        "selectedIconPath": "images/icon-store-2.png",
+        "iconPath": "images/icon-store.png",
+        "pagePath": "pages/storeInfo/storeInfo",
+        "text": "店铺动态"
+      }
+    ]
+  }
+}
