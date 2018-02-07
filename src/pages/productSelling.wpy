@@ -30,7 +30,7 @@
                                 </view>
                                 <view class="zan-card__detail-row zan-c-gray-darker">
                                     <view class="zan-card__right-col">
-                                        <stepper :stepper.sync="itemStepper['item'+item.id]" min="1" max="item.stock" componentId="item.id"></stepper>
+                                        <stepper :stepper.sync="itemStepper['item'+item.id]" min="1" max="item.stock" :componentId="item.id"></stepper>
                                     </view>
                                     <view class="zan-card__left-col" style="margin-top:5px">
                                         剩余{{item.stock}}件

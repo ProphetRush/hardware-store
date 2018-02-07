@@ -1,6 +1,61 @@
 <template>
     <view class="container">
         <navbar onTab="2"></navbar>
+        <view class='container' style='padding-bottom:120rpx; padding-top:100rpx'>
+            <view class='zan-row' style='width:100%; display:flex'>
+                <view class="doc-title zan-hairline--bottom">采购列表</view>
+                <button class="addBtn" catchtap='addShipmentItem' hover-class='addBtnHover'>+</button>
+            </view>
+            <view class='container' style="background:#fff;border:0 solid #e5e5e5">
+                <repeat for="{{cartItems}}" key="id" item="item" index="index">
+                    <view  class="zan-panel">
+                        <view class="zan-card" id="{{item.id}}" bindtouchstart="touchS" bindtouchmove="touchM"
+                              bindtouchend="touchE" style="left:{{item.left + 'rpx'}}" data-index="{{index}}">
+                            <view class="zan-card__thumb" style='background:#d8d8d8'>
+                                <image class="zan-card__img" src='{{item.imageURL}}' mode='aspectFit'></image>
+                            </view>
+                            <view class="zan-card__detail" style="padding-left:10px">
+                                <view class="zan-card__detail-row" style="margin-bottom:20px;font-size:18px">
+                                    <view class="zan-card__right-col" style='color:#e64340; font-weight:bold;'>¥
+                                        {{item.purchasePrice}}
+                                    </view>
+                                    <view class="zan-card__left-col zan-ellipsis--l2">
+                                        {{item.name}}
+                                    </view>
+                                </view>
+                                <view class="zan-card__detail-row zan-c-gray-darker" style="margin-bottom:10px">
+                                    <view class="zan-card__left-col">
+                                        商品编号： {{item.id}}
+                                    </view>
+                                </view>
+                                <view class="zan-card__detail-row zan-c-gray-darker">
+                                    <view class="zan-card__right-col">
+                                        <stepper :stepper.sync="itemStepper['item'+item.id]" min="1" max="100000" :componentId="item.id"></stepper>
+                                    </view>
+                                    <view class="zan-card__left-col" style="margin-top:5px">
+                                        剩余{{item.stock}}件
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                        <view class="del-wrapper">
+                            <view class="delete-btn" data-index="{{index}}" catchtap="delItem({{item}})">
+                                删除
+                            </view>
+                        </view>
+
+                    </view>
+                </repeat>
+            </view>
+
+        </view>
+
+        <view class="billingBox">
+            <view class="left-price">
+                <text style='font-weight:bold;font-size:36rpx;margin-right:30px;color:#5b5b5b;line-height:120rpx;'>合计:</text>¥ {{totalPrice}}
+            </view>
+            <view class="to-pay-btn" bindtap="toPayOrder">立即下单</view>
+        </view>
     </view>
 </template>
 
@@ -8,17 +63,250 @@
     import wepy from 'wepy'
     import Navbar from '../components/topNavbar'
     import Stepper from '../components/zan-components/zan-stepper'
+    import Touches from '../mixins/Touches';
     export default class Index extends wepy.page {
-        data = {}
-        computed = {}
-        methods = {}
         components = {navbar : Navbar, stepper: Stepper};
-        onLoad() {
+        data = {
+            text: "Page Selling",
+            cartItems: [{
+                id: '4361900',
+                name: '省力双把铆钉枪',
+                imageURL: '/images/examplePic.jpg',
+                priceForSale: '49.00',
+                purchasePrice: '40.00',
+                stock: 20,
+                sales: 12,
+            }, {
+                id: '4361901',
+                name: '水管三角阀',
+                imageURL: '/images/examplePic.jpg',
+                priceForSale: '998.00',
+                purchasePrice: '8.00',
+                stock: 30,
+                sales: 12,
+            },{
+                id: '4361903',
+                name: '螺帽紧固件',
+                imageURL: '/images/examplePic.jpg',
+                priceForSale: '49.00',
+                purchasePrice: '0.20',
+                stock: 50,
+                sales: 12
+            }, {
+                id: '4361904',
+                name: '轴承 钢铁',
+                imageURL: '/images/examplePic.jpg',
+                priceForSale: '998.00',
+                purchasePrice: '2.00',
+                stock: 35,
+                sales: 12
+            }],
+            totalPrice: 0.00,
+            itemStepper: {},
+        };
+        mixins = [Touches];
+        events = {
+            zanStepperChange({ componentId, stepper }, event) {
+                this.itemStepper[`item${componentId}`] = stepper;
+                this.$apply();
+                this.refreshTotalPrice();
+            }
+        };
+
+        computed = {};
+        methods = {
+            addShipmentItem: function () {
+                wx.scanCode({
+                    success: (res) => {
+                        console.log(res)
+                    }
+                })
+            },
+            touchS: function (e) {  // touchstart
+                let startX = this.getClientX(e);
+                this.startX = startX;
+            },
+
+            touchM: function (e) {  // touchmove
+                let cartItems = this.touchM(e, this.cartItems, this.startX);
+                this.cartItems = cartItems;
+
+            },
+
+            touchE: function (e) {  // touchend
+                const width = 150;
+                let cartItems =this.touchE(e, this.cartItems, this.startX, width);
+                this.cartItems = cartItems;
+            },
+            delItem: function (item) {
+                for(let x of this.cartItems){
+                    if(x.id === item.id){
+                        this.cartItems.del(x)
+                    }
+                }
+                this.refreshTotalPrice();
+                this.$apply();
+            },
+
+
+
+
+        };
+
+        initItemStepper() {
+            var itemStepper = {};
+            for(var i of this.cartItems){
+                itemStepper['item'+i.id] = 1;
+            }
+            this.itemStepper= itemStepper;
+            this.$apply();
+        }
+
+        refreshTotalPrice() {
+            var totalPrice = 0;
+            for (let item of this.cartItems) {
+                totalPrice += this.itemStepper['item'+item.id] * item.purchasePrice;
+            }
+            this.totalPrice= totalPrice.toFixed(2);
 
         }
+
+        onLoad() {
+            this.initItemStepper();
+            this.refreshTotalPrice();
+            console.log(Touches)
+        }
+
     }
 </script>
 
-<style scoped>
+<style>
+    @import '../components/zanui/panel.wxss';
+    @import '../components/zanui/card.wxss';
+    @import '../components/zanui/color.wxss';
+    @import '../components/zanui/row.wxss';
+
+    page{
+        height: 100%;
+    }
+
+    .container {
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+
+
+    .doc-title{
+        position: relative;
+        padding: 20px 0;
+        margin: 10px 15px;
+        line-height: 24px;
+        font-size: 22px;
+        color: #666;
+        text-align: left;
+        width: 50%;
+        padding-left: 40px;
+    }
+
+    .addBtnHover{
+        background: #f1f1f1;
+    }
+
+    .addBtn{
+        width: 100rpx;
+        height: 100rpx;
+        border: 1rpx solid #ccc;
+        border-radius: 50%;
+        color:#ccc;
+        margin-left: 80rpx;
+        text-align: center;
+        font-size: 30px;
+        margin-top: 20px;
+        line-height: 1.6;
+    }
+
+    button::after{
+        border: none;
+    }
+
+    .zan-panel::after{
+        border-top-width: 0;
+        z-index: 2;
+    }
+
+    .zan-panel{
+        margin:0;
+    }
+
+    .zan-card{
+        padding-top: 30px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        z-index: 2;
+        background: white;
+        transition: left 0.2s ease-in-out;
+    }
+
+    .del-wrapper{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .delete-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 150rpx;
+        z-index: 1;
+        color: white;
+        background: #e64340;
+        font-size: 32rpx;
+    }
+
+    .billingBox{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 120rpx;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        border-bottom:1px solid #eee;
+        border-top:1px solid #eee;
+        background-color: #fff;
+        z-index: 3;
+    }
+
+    .billingBox .to-pay-btn{
+        width:40%;
+        text-align: center;
+        line-height: 120rpx;
+        background-color: #e64340;
+        font-size:32rpx;
+        color:#ffffff;
+
+    }
+
+    .billingBox  .left-price{
+        width: 60%;
+        text-align: center;
+        justify-content: space-between;
+        line-height: 120rpx;
+        font-size:40rpx;
+        box-sizing: border-box;
+        color: #e64340;
+        font-weight: bold;
+    }
 
 </style>

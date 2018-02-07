@@ -1,5 +1,4 @@
 <template>
-    <import src="/components/stepper/index.wxml"/>
     <view class="container">
         <view class='container' style='padding-bottom:120rpx;'>
             <view class='zan-row' style='width:100%; display:flex'>
@@ -29,7 +28,7 @@
                             </view>
                             <view class="zan-card__detail-row zan-c-gray-darker">
                                 <view class="zan-card__right-col">
-                                    <stepper :stepper="itemStepper['item'+item.id]" min="0" max="1000" componentId="item.id"> </stepper>
+                                    <stepper :stepper.sync="itemStepper['item'+item.id]" min="0" max="1000" :componentId="item.id"> </stepper>
                                 </view>
                                 <view class="zan-card__left-col" style="margin-top:5px; font-size:12px" >
                                     采购价： ￥{{item.purchasePrice}}
@@ -63,7 +62,7 @@
                             </view>
                             <view class="zan-card__detail-row zan-c-gray-darker">
                                 <view class="zan-card__right-col">
-                                    <stepper :stepper="itemStepper['item'+item.id]" min="0" max="1000" componentId="item.id"> </stepper>
+                                    <stepper :stepper="itemStepper['item'+item.id]" min="0" max="1000" :componentId="item.id"> </stepper>
                                 </view>
                                 <view class="zan-card__left-col" style="margin-top:5px; font-size:12px">
                                     采购价： ￥{{item.purchasePrice}}
@@ -77,7 +76,7 @@
 
             <view class="doc_sub_title zan-hairline--bottom" style="{{hasCustomItem===true?'':'display:none'}}">自定义</view>
             <view class='container' style="background:#fff;border:0 solid #e5e5e5">
-                <repeat class="zan-panel" for="{{customItems}}" key="id" item="item"index="index">
+                <repeat class="zan-panel" for="{{customItems}}" key="id" item="item" index="index">
                     <view class="zan-card" id="{{item.id}}" data-index="{{index}}">
                         <view class="zan-card__thumb" style='background:#d8d8d8'>
                             <image class="zan-card__img" src='{{item.imageURL}}' mode='aspectFit'></image>
@@ -98,7 +97,7 @@
                             </view>
                             <view class="zan-card__detail-row zan-c-gray-darker">
                                 <view class="zan-card__right-col">
-                                    <stepper :stepper="itemStepper['item'+item.id]" min="0" max="1000" componentId="item.id"> </stepper>
+                                    <stepper :stepper="itemStepper['item'+item.id]" min="0" max="1000" :componentId="item.id"> </stepper>
                                 </view>
                                 <view class="zan-card__left-col" style="margin-top:5px; font-size:12px">
                                     采购价： ￥{{item.purchasePrice}}
@@ -136,6 +135,7 @@
                 purchasePrice: '40.00',
                 stock: 20,
                 sales: 12,
+                count: 1
             }, {
                 id: '4361901',
                 name: '水管三角阀',
@@ -144,6 +144,7 @@
                 purchasePrice: '8.00',
                 stock: 30,
                 sales: 12,
+                count: 1
             }],
             hotSales: [{
                 id: '4361903',
@@ -152,7 +153,8 @@
                 priceForSale: '49.00',
                 purchasePrice: '0.20',
                 stock: 50,
-                sales: 12
+                sales: 12,
+                count: 1
             }, {
                 id: '4361904',
                 name: '轴承 钢铁',
@@ -160,7 +162,8 @@
                 priceForSale: '998.00',
                 purchasePrice: '2.00',
                 stock: 35,
-                sales: 12
+                sales: 12,
+                count: 1
             }],
             customItems: [],
             cartItems: [],
