@@ -1,0 +1,347 @@
+<template>
+    <import src="/components/stepper/index.wxml"/>
+    <view class="container">
+        <view class='container' style='padding-bottom:120rpx;'>
+            <view class='zan-row' style='width:100%; display:flex'>
+                <view class="doc-title zan-hairline--bottom">推荐采购</view>
+                <button class="addBtn" catchtap='addCustomItem' hover-class='addBtnHover'>+</button>
+            </view>
+            <view class="doc_sub_title zan-hairline--bottom">库存不足</view>
+            <view class='container' style="background:#fff;border:0 solid #e5e5e5">
+                <repeat class="zan-panel" for="{{stockLacking}}" key="id" item="item" index="index">
+                    <view class="zan-card" id="{{item.id}}" data-index="{{index}}">
+                        <view class="zan-card__thumb" style='background:#d8d8d8'>
+                            <image class="zan-card__img" src='{{item.imageURL}}' mode='aspectFit'></image>
+                        </view>
+                        <view class="zan-card__detail" style="padding-left:10px">
+                            <view class="zan-card__detail-row" style="margin-bottom:10px;font-size:16px">
+                                <view class="zan-card__right-col" style='color:#e64340; font-weight:bold;'>
+                                    仅剩{{item.stock}}件
+                                </view>
+                                <view class="zan-card__left-col zan-ellipsis--l2">
+                                    {{item.name}}
+                                </view>
+                            </view>
+                            <view class="zan-card__detail-row zan-c-gray-darker">
+                                <view class="zan-card__left-col" style="font-size:12px">
+                                    商品编号： {{item.id}}
+                                </view>
+                            </view>
+                            <view class="zan-card__detail-row zan-c-gray-darker">
+                                <view class="zan-card__right-col">
+                                    <stepper :stepper="itemStepper['item'+item.id]" min="0" max="1000" componentId="item.id"> </stepper>
+                                </view>
+                                <view class="zan-card__left-col" style="margin-top:5px; font-size:12px" >
+                                    采购价： ￥{{item.purchasePrice}}
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </repeat>
+            </view>
+
+            <view class="doc_sub_title zan-hairline--bottom" style="padding-top:10px">店铺热卖</view>
+            <view class='container' style="background:#fff;border:0 solid #e5e5e5">
+                <repeat class="zan-panel" for="{{hotSales}}" key="id" item="item" index="index">
+                    <view class="zan-card" id="{{item.id}}" data-index="{{index}}">
+                        <view class="zan-card__thumb" style='background:#d8d8d8'>
+                            <image class="zan-card__img" src='{{item.imageURL}}' mode='aspectFit'></image>
+                        </view>
+                        <view class="zan-card__detail" style="padding-left:10px">
+                            <view class="zan-card__detail-row" style="margin-bottom:10px;font-size:18px">
+                                <view class="zan-card__right-col" style='color:#e64340; font-weight:bold;'>
+                                    还剩{{item.stock}}件
+                                </view>
+                                <view class="zan-card__left-col zan-ellipsis--l2">
+                                    {{item.name}}
+                                </view>
+                            </view>
+                            <view class="zan-card__detail-row zan-c-gray-darker">
+                                <view class="zan-card__left-col"  style="font-size:12px">
+                                    商品编号： {{item.id}}
+                                </view>
+                            </view>
+                            <view class="zan-card__detail-row zan-c-gray-darker">
+                                <view class="zan-card__right-col">
+                                    <stepper :stepper="itemStepper['item'+item.id]" min="0" max="1000" componentId="item.id"> </stepper>
+                                </view>
+                                <view class="zan-card__left-col" style="margin-top:5px; font-size:12px">
+                                    采购价： ￥{{item.purchasePrice}}
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </repeat>
+            </view>
+
+
+            <view class="doc_sub_title zan-hairline--bottom" style="{{hasCustomItem===true?'':'display:none'}}">自定义</view>
+            <view class='container' style="background:#fff;border:0 solid #e5e5e5">
+                <repeat class="zan-panel" for="{{customItems}}" key="id" item="item"index="index">
+                    <view class="zan-card" id="{{item.id}}" data-index="{{index}}">
+                        <view class="zan-card__thumb" style='background:#d8d8d8'>
+                            <image class="zan-card__img" src='{{item.imageURL}}' mode='aspectFit'></image>
+                        </view>
+                        <view class="zan-card__detail" style="padding-left:10px">
+                            <view class="zan-card__detail-row" style="margin-bottom:10px;font-size:18px">
+                                <view class="zan-card__right-col" style='color:#e64340; font-weight:bold;'>
+                                    仅剩{{item.stock}}件
+                                </view>
+                                <view class="zan-card__left-col zan-ellipsis--l2">
+                                    {{item.name}}
+                                </view>
+                            </view>
+                            <view class="zan-card__detail-row zan-c-gray-darker">
+                                <view class="zan-card__left-col"  style="font-size:12px">
+                                    商品编号： {{item.id}}
+                                </view>
+                            </view>
+                            <view class="zan-card__detail-row zan-c-gray-darker">
+                                <view class="zan-card__right-col">
+                                    <stepper :stepper="itemStepper['item'+item.id]" min="0" max="1000" componentId="item.id"> </stepper>
+                                </view>
+                                <view class="zan-card__left-col" style="margin-top:5px; font-size:12px">
+                                    采购价： ￥{{item.purchasePrice}}
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </repeat>
+            </view>
+
+
+        </view>
+
+        <view class="billingBox">
+            <view class="left-price">
+                <text style='font-weight:bold;font-size:36rpx;margin-right:30px;color:#5b5b5b;line-height:100rpx;'>合计:</text>¥ {{totalPrice}}
+            </view>
+            <view class="to-pay-btn" bindtap="toOrderStatement">结算</view>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import Stepper from '../components/zan-components/zan-stepper'
+    export default class Index extends wepy.page{
+        components = {stepper: Stepper}
+        data = {
+            text: "Page purchaseRecommendation",
+            stockLacking: [{
+                id: '4361900',
+                name: '省力双把铆钉枪',
+                imageURL: '/images/examplePic.jpg',
+                priceForSale: '49.00',
+                purchasePrice: '40.00',
+                stock: 20,
+                sales: 12,
+            }, {
+                id: '4361901',
+                name: '水管三角阀',
+                imageURL: '/images/examplePic.jpg',
+                priceForSale: '998.00',
+                purchasePrice: '8.00',
+                stock: 30,
+                sales: 12,
+            }],
+            hotSales: [{
+                id: '4361903',
+                name: '螺帽紧固件',
+                imageURL: '/images/examplePic.jpg',
+                priceForSale: '49.00',
+                purchasePrice: '0.20',
+                stock: 50,
+                sales: 12
+            }, {
+                id: '4361904',
+                name: '轴承 钢铁',
+                imageURL: '/images/examplePic.jpg',
+                priceForSale: '998.00',
+                purchasePrice: '2.00',
+                stock: 35,
+                sales: 12
+            }],
+            customItems: [],
+            cartItems: [],
+            hasCustomItems: false,
+            itemStepper: {},
+            totalPrice: 0.00
+        }
+
+
+        computed = {
+
+        }
+        methods = {
+            scanQRCode: function(){
+                wx.scanCode({
+                    success: (res) => {
+                        console.log(res)
+                    }
+                })
+            },
+        }
+
+        initItemStepper() {
+            var itemStepper = {};
+            for(var i of [...this.data.stockLacking, ...this.data.hotSales, ...this.data.customItems]){
+                itemStepper['item'+i.id] = 1;
+            }
+            this.itemStepper= itemStepper;
+            this.$apply();
+        }
+
+        handleZanStepperChange(e) {
+            var componentId = e.componentId;
+            var stepper = e.stepper;
+            this.itemStepper[`item${componentId}`] = stepper;
+            this.refreshTotalPrice();
+        }
+
+        refreshTotalPrice() {
+            var totalPrice = 0;
+            for (let item of this.data.cartItems) {
+                totalPrice += this.data.itemStepper['item'+item.id] * item.purchasePrice;
+            }
+            this.totalPrice= totalPrice.toFixed(2);
+        }
+
+        onLoad() {
+            this.initItemStepper();
+            this.cartItems = [...this.data.stockLacking, ...this.data.hotSales, ...this.data.customItems];
+            this.$apply();
+            this.refreshTotalPrice();
+        }
+
+        onShow() {
+
+        }
+
+        events = {
+            zanStepperChange({ componentId, stepper }, event) {
+                this.itemStepper[`item${componentId}`] = stepper;
+                this.$apply();
+                this.refreshTotalPrice();
+            }
+        }
+
+    }
+
+</script>
+
+<style scoped>
+    @import '../components/zanui/panel.wxss';
+    @import '../components/zanui/card.wxss';
+    @import '../components/zanui/color.wxss';
+    @import '../components/zanui/row.wxss';
+
+    page{
+        height: 100%;
+    }
+
+    .container {
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+
+    .doc-title{
+        position: relative;
+        padding: 20px 0;
+        margin: 10px 15px;
+        line-height: 24px;
+        font-size: 22px;
+        color: #666;
+        text-align: left;
+        width: 50%;
+        padding-left: 40px;
+    }
+
+    .doc_sub_title{
+        font-size:14px;
+        color:#666;
+        padding-left:40px;
+        padding-bottom:10px;
+
+    }
+
+    .addBtnHover{
+        background: #f1f1f1;
+    }
+
+    .addBtn{
+        width: 100rpx;
+        height: 100rpx;
+        border: 1rpx solid #ccc;
+        border-radius: 50%;
+        color:#ccc;
+        margin-left: 80rpx;
+        text-align: center;
+        font-size: 30px;
+        margin-top: 20px;
+        line-height: 1.6;
+    }
+
+    button::after{
+        border: none;
+    }
+
+    .zan-panel::after{
+        border-top-width: 0;
+        z-index: 2;
+    }
+
+    .zan-panel{
+        margin:0;
+    }
+
+    .zan-card{
+        padding-top: 10px;
+        padding-left: 20px;
+        padding-right: 20px;
+        z-index: 2;
+        background: white;
+        transition: left 0.2s ease-in-out;
+    }
+
+
+
+    .billingBox{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 100rpx;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        border-bottom:1px solid #eee;
+        border-top:1px solid #eee;
+        background-color: #fff;
+        z-index: 3;
+    }
+
+    .billingBox .to-pay-btn{
+        width:40%;
+        text-align: center;
+        line-height: 100rpx;
+        background-color: #e64340;
+        font-size:32rpx;
+        color:#ffffff;
+
+    }
+
+    .billingBox  .left-price{
+        width: 60%;
+        text-align: center;
+        justify-content: space-between;
+        line-height: 100rpx;
+        font-size:40rpx;
+        box-sizing: border-box;
+        color: #e64340;
+        font-weight: bold;
+    }
+</style>

@@ -1,0 +1,24 @@
+<template>
+    <view class="container">
+        <navbar onTab="2"></navbar>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import Navbar from '../components/topNavbar'
+    import Stepper from '../components/zan-components/zan-stepper'
+    export default class Index extends wepy.page {
+        data = {}
+        computed = {}
+        methods = {}
+        components = {navbar : Navbar, stepper: Stepper};
+        onLoad() {
+
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

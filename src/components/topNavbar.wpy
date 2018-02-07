@@ -1,0 +1,111 @@
+<style>
+    .navbar{
+        white-space: nowrap;
+        height: 100rpx;
+        width: 100%;
+        background-color: #f5f5f5;
+        text-align:center;
+        color:#5b5b5b;
+        position:fixed;
+        z-index:3;
+
+    }
+
+    .navcell{
+        box-sizing: content-box;
+        font-size: 24rpx;
+        line-height: 100rpx;
+        text-align: center;
+        display: inline-block;
+        overflow: hidden;
+    }
+
+    .nav-item{
+        border-bottom: 3rpx solid #fff;
+    }
+
+    .nav-item-on{
+        border-bottom: 3rpx solid #11cd6e;
+        color: #11cd6e;
+    }
+
+    .navigator-hover{
+        border-bottom: 3rpx solid #11cd6e;
+        color: #11cd6e;
+    }
+</style>
+
+<template>
+    <view class="navbar">
+        <view class="zan-row" style="height: 100%;">
+            <view class="zan-col zan-col-8 navcell">
+                <view class='nav-item {{isTab1On}}'>
+                    <navigator url="/pages/productSelling" open-type='redirect'
+                               hover-class="navigator-hover">
+                        出货
+                    </navigator>
+                </view>
+            </view>
+            <view class="zan-col zan-col-8 navcell">
+                <view class='nav-item {{isTab2On}}'>
+                    <navigator url="/pages/purchase" open-type='redirect'
+                               hover-class="navigator-hover">
+                        采购
+                    </navigator>
+                </view>
+            </view>
+            <view class="zan-col zan-col-8 navcell">
+                <view class='nav-item {{isTab3On}}'>
+                    <navigator url="/pages/storeIn" open-type='redirect'
+                               hover-class="navigator-hover">
+                        入库
+                    </navigator>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    export default class TopNavbar extends wepy.component {
+        props = {
+            onTab: String
+        };
+
+        onLoad () {
+            if(this.onTab === "1") this.tab1On=true;
+            if(this.onTab === "2") this.tab2On=true;
+            if(this.onTab === "3") this.tab3On=true;
+        }
+
+        data = {
+            tab1On: false,
+            tab2On: false,
+            tab3On: false
+        }
+        events = {
+
+        }
+
+        watch = {
+
+        }
+
+        methods = {
+
+        }
+
+        computed = {
+            isTab1On(){
+                return this.tab1On?'nav-item-on':''
+            },
+            isTab2On(){
+                return this.tab2On?'nav-item-on':''
+            },
+            isTab3On(){
+                return this.tab3On?'nav-item-on':''
+            }
+        }
+    }
+</script>

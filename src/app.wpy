@@ -1,0 +1,90 @@
+<style>
+    @import "/components/zanui/index.wxss";
+
+    page{
+        height: 100%;
+        background: #F9F9F9;
+    }
+
+
+</style>
+
+<script>
+    import wepy from 'wepy'
+    import 'wepy-async-function'
+
+    export default class extends wepy.app {
+        config = {
+            pages: [
+                "pages/index",
+                "pages/purchaseRecommendation",
+                "pages/productSelling",
+                "pages/purchase",
+                "pages/storeIn"
+
+            ],
+            window: {
+                "backgroundTextStyle": "light",
+                "navigationBarBackgroundColor": "#fff",
+                "navigationBarTitleText": "汇五金",
+                "navigationBarTextStyle": "black"
+            },
+            tabBar: {
+                "backgroundColor": "#F7F7FA",
+                "color": "#a9b7b7",
+                "selectedColor": "#11cd6e",
+                "borderStyle": "white",
+                "list": [
+                    {
+                        "selectedIconPath": "images/icon-index-2.png",
+                        "iconPath": "images/icon-index.png",
+                        "pagePath": "pages/index",
+                        "text": "首页"
+                    },
+                    {
+                        "selectedIconPath": "images/icon-cart-2.png",
+                        "iconPath": "images/icon-cart.png",
+                        "pagePath": "pages/purchaseRecommendation",
+                        "text": "推荐采购"
+                    },
+                    {
+                        "selectedIconPath": "images/icon-store-2.png",
+                        "iconPath": "images/icon-store.png",
+                        "pagePath": "pages/index",
+                        "text": "店铺动态"
+                    }
+                ]
+            }
+        }
+
+        globalData = {
+            userInfo: null
+        }
+
+        constructor() {
+            super();
+            this.use('requestfix')
+        }
+
+        onLaunch() {
+            Array.prototype.del=function(value){
+                var index=this.indexOf(value);
+                this.splice(index,1);
+                return this;
+            }
+        }
+
+        getUserInfo(cb) {
+            const that = this
+            if (this.globalData.userInfo) {
+                return this.globalData.userInfo
+            }
+            wepy.getUserInfo({
+                success(res) {
+                    that.globalData.userInfo = res.userInfo
+                    cb && cb(res.userInfo)
+                }
+            })
+        }
+    }
+</script>
