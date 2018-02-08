@@ -115,7 +115,7 @@
             <view class="left-price">
                 <text style='font-weight:bold;font-size:36rpx;margin-right:30px;color:#5b5b5b;line-height:100rpx;'>合计:</text>¥ {{totalPrice}}
             </view>
-            <view class="to-pay-btn" bindtap="toOrderStatement">结算</view>
+            <view class="to-pay-btn" bindtap="toOrderStatement">立即采购</view>
         </view>
     </view>
 </template>
