@@ -180,8 +180,6 @@
                     if(i.id === this.currentModifiedPriceId){
                         if(!isNaN(parseFloat(this.newPrice))){
                             i.priceForSale=parseFloat(this.newPrice).toFixed(2);
-                            this.newPrice=0;
-                            this.$apply();
                         }
                     }
 

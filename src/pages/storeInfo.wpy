@@ -1,0 +1,149 @@
+<template>
+    <view class="container" style="height: 100%">
+        <view class="container brief" style="height: 55%; padding-bottom: 10px; color:white">
+            <view class="container" style="height: 80%; padding-top: 50px; background-color: rgba(147, 138, 123, 0.6);">
+                <view class="zan-row">
+                    <text style="font-size: 14px">今日销售额（元）</text>
+                </view>
+                <view class="zan-row" style="margin-top: 10px">
+                    <text style="font-size: 54px">{{todaySales}}</text>
+                </view>
+                <view class="zan-row" style="margin-top: 20px; font-size: 16px">
+                    总销售额： {{overallSales}} 元
+                </view>
+            </view>
+            <view class="zan-row" style="height: 20%; display: flex; padding-top:10px; text-align: center; font-size: 14px; background-color: rgba(147, 138, 123, 0.7)">
+                <view class="zan-col-8">
+                    <view class="zan-row">
+                        本周销量（元）
+                    </view>
+                    <view class="zan-row" style="font-size: 16px; margin-top: 10px">
+                        {{weekSales}}
+                    </view>
+                </view>
+                <view class="zan-col-8">
+                    <view class="zan-row">
+                        本月销量（元）
+                    </view>
+                    <view class="zan-row"  style="font-size: 16px; margin-top: 10px">
+                        {{monthSales}}
+                    </view>
+                </view>
+                <view class="zan-col-8">
+                    <view class="zan-row">
+                        本月利润（元）
+                    </view>
+                    <view class="zan-row"  style="font-size: 16px; margin-top: 10px">
+                        {{monthProfit}}
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="container" style="height: 45%; border-top:1px solid #e5e5e5;padding-bottom:50px;border-bottom:1px solid #e5e5e5;">
+            <view class="zan-row" style="height: 50%; display:flex; padding-top: 20px">
+                <view class="zan-col-12" style="height: 100%; border-right:1px solid #e5e5e5;" @tap.stop="toStoreManagement">
+                    <view class="zan-row">
+                        <image class="menuIcon" src="../images/storeInfomation.png"></image>
+                    </view>
+                    <view class="zan-row">
+                        <text style="font-size: 16px">店铺信息</text>
+                    </view>
+                </view>
+                <view class="zan-col-12" style="height: 100%" @tap.stop="toStockManagement">
+                    <view class="zan-row">
+                        <image class="menuIcon" src="../images/stockManage.png"></image>
+                    </view>
+                    <view class="zan-row">
+                        <text style="font-size: 16px">库存管理</text>
+                    </view>
+                </view>
+            </view>
+            <view class="zan-row" style="height: 50%; display:flex; padding-top:20px">
+                <view class="zan-col-12" style="height: 100%; border-right:1px solid #e5e5e5;" @tap.stop="toSellingOrders">
+                    <view class="zan-row">
+                        <image class="menuIcon" src="../images/sellOrder.png"></image>
+                    </view>
+                    <view class="zan-row">
+                        <text style="font-size: 16px">销售订单</text>
+                    </view>
+                </view>
+                <view class="zan-col-12" style="height: 100%" @tap.stop="toPurchaseOrders">
+                    <view class="zan-row">
+                        <image class="menuIcon" src="../images/purchaseOrder.png"></image>
+                    </view>
+                    <view class="zan-row">
+                        <text style="font-size: 16px">采购订单</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+
+    export default class Index extends wepy.page {
+        data = {
+            todaySales: 122.30,
+            overallSales: 6546.12,
+            weekSales: 0.00,
+            monthSales: 0.00,
+            monthProfit: 0.00
+
+        }
+        computed = {}
+        methods = {
+            toStoreManagement: function () {
+                wx.navigateTo({
+                    url: 'storeManagement'
+                })
+            },
+            toStockManagement: function () {
+                wx.navigateTo({
+                    url: 'stockManagement'
+                })
+            },
+            toSellingOrders: function () {
+                wx.navigateTo({
+                    url: 'sellingOrders'
+                })
+            },
+            toPurchaseOrders: function () {
+                wx.navigateTo({
+                    url: 'purchaseOrders'
+                })
+            }
+        }
+
+        onLoad() {
+
+        }
+    }
+</script>
+
+<style>
+    page{
+        height: 100%;
+    }
+
+    .brief{
+
+    }
+
+    .container {
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .menuIcon{
+        height: 70px;
+        width: 70px;
+    }
+
+
+</style>

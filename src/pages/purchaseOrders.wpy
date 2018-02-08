@@ -1,0 +1,21 @@
+<template>
+    <view></view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+
+    export default class Index extends wepy.page {
+        data = {}
+        computed = {}
+        methods = {}
+
+        onLoad() {
+
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

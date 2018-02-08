@@ -20,7 +20,12 @@
                 "pages/purchaseRecommendation",
                 "pages/productSelling",
                 "pages/purchase",
-                "pages/storeIn"
+                "pages/storeIn",
+                "pages/storeInfo",
+                "pages/storeManagement",
+                "pages/stockManagement",
+                "pages/sellingOrders",
+                "pages/purchaseOrders",
 
             ],
             window: {
@@ -50,7 +55,7 @@
                     {
                         "selectedIconPath": "images/icon-store-2.png",
                         "iconPath": "images/icon-store.png",
-                        "pagePath": "pages/index",
+                        "pagePath": "pages/storeInfo",
                         "text": "店铺动态"
                     }
                 ]
