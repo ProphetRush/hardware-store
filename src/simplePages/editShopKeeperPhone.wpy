@@ -1,0 +1,78 @@
+<template>
+    <view class="doc-title zan-hairline--bottom">修改店铺信息</view>
+    <view class="zan-panel-title">店主手机号码</view>
+    <view class="zan-panel">
+        <field :options="spPhoneField"  componentId="spPhoneField"></field>
+    </view>
+    <view class="zan-btns">
+        <button
+            class="zan-btn zan-btn--primary"
+            @tap="submit">提交修改</button>
+    </view>
+    <zanToast style="margin-bottom: 50px"></zanToast>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import Field from '../components/zan-components/zan-field'
+    import zanToast from '../components/zan-components/zan-toast'
+    export default class Index extends wepy.page {
+        data = {
+            spPhoneField: {
+                placeholder: '请输入店主的手机号',
+            },
+            shopKeeperPhone: "",
+        }
+        components = {
+            field: Field,
+            zanToast,
+        };
+        computed = {}
+        methods = {
+            submit(e){
+                if(this.isPhoneAvailable(this.shopKeeperPhone)){
+                    console.log(this.shopKeeperPhone)
+                }else{
+                    this.$invoke('zanToast', 'showZanToast', { title: '手机格式不对！请重新输入！', timeout: 2000 })
+                }
+
+            }
+        };
+
+        isPhoneAvailable(phone) {
+            var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+            if (!myreg.test(phone)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+            onLoad() {
+
+            }
+
+        events = {
+            zanFieldBlur(e) {
+                this.shopKeeperPhone = e.detail.value;
+                this.$apply();
+            }
+        }
+    }
+</script>
+
+<style scoped>
+    @import '/components/zanui/panel.wxss';
+    @import '/components/zanui/btn.wxss';
+    .doc-title{
+        position: relative;
+        padding: 20px 0;
+        margin: 10px 15px;
+        line-height: 24px;
+        font-size: 22px;
+        color: #666;
+        text-align: left;
+        width: 50%;
+        padding-left: 40px;
+    }
+</style>

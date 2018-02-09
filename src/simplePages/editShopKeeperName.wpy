@@ -1,0 +1,61 @@
+<template>
+    <view class="doc-title zan-hairline--bottom">修改店铺信息</view>
+    <view class="zan-panel-title">店主姓名</view>
+    <view class="zan-panel">
+        <field :options="spNameField"  componentId="spNameField"></field>
+    </view>
+    <view class="zan-btns">
+        <button
+            class="zan-btn zan-btn--primary"
+            @tap="submit">提交修改</button>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import Field from '../components/zan-components/zan-field'
+    export default class Index extends wepy.page {
+        data = {
+            spNameField: {
+                placeholder: '请输入店主姓名',
+            },
+            shopKeeperName: "aaa",
+        }
+        components = {
+            field: Field
+        };
+        computed = {}
+        methods = {
+            submit(e){
+                console.log(this.shopKeeperName)
+            }
+        }
+
+        onLoad() {
+
+        }
+
+        events = {
+            zanFieldBlur(e) {
+                this.shopKeeperName = e.detail.value;
+                this.$apply();
+            }
+        }
+    }
+</script>
+
+<style scoped>
+    @import '/components/zanui/panel.wxss';
+    @import '/components/zanui/btn.wxss';
+    .doc-title{
+        position: relative;
+        padding: 20px 0;
+        margin: 10px 15px;
+        line-height: 24px;
+        font-size: 22px;
+        color: #666;
+        text-align: left;
+        width: 50%;
+        padding-left: 40px;
+    }
+</style>

@@ -26,7 +26,8 @@
                 "pages/stockManagement",
                 "pages/sellingOrders",
                 "pages/purchaseOrders",
-
+                "simplePages/editShopKeeperName",
+                "simplePages/editShopKeeperPhone",
             ],
             window: {
                 "backgroundTextStyle": "light",

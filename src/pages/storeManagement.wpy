@@ -1,21 +1,160 @@
 <template>
-    <view></view>
+    <view class="container" style="height: 100%">
+        <view class="zan-row userinfo" style="padding-top: 20px">
+            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+            <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+        </view>
+        <view class='zan-row' style='width:100%; display:flex'>
+            <view class="doc-title zan-hairline--bottom">店铺信息</view>
+        </view>
+        <view class="zan-panel">
+            <view class="zan-cell zan-cell--access" style="height: 80rpx"  @tap.stop="editShopKeeperName">
+                <view class="zan-cell__bd">店主姓名</view>
+                <view class="zan-cell__ft">{{storeInfo.shopKeeper}}</view>
+            </view>
+            <view class="zan-cell zan-cell--access" @tap.stop="editShopKeeperPhone">
+                <view class="zan-cell__bd">联系电话</view>
+                <view class="zan-cell__ft">{{storeInfo.keeperPhoneNumber}}</view>
+            </view>
+        </view>
+
+        <view class="zan-panel">
+            <view class="zan-cell zan-cell--access"  style="height: 80rpx" @tap.stop="editShopName">
+                <view class="zan-cell__bd">店铺名称</view>
+                <view class="zan-cell__ft">{{storeInfo.shopName}}</view>
+            </view>
+            <view class="zan-cell zan-cell--access" style="height: 100rpx" @tap.stop="editShopAddr">
+                <view class="zan-cell__bd">
+                    <view class="zan-cell__text">地址</view>
+                    <view class="zan-cell__desc" style="padding-top: 10px">{{storeInfo.shopAddress}}</view>
+                </view>
+                <view class="zan-cell__ft"></view>
+            </view>
+            <view class="zan-cell zan-cell--access" @tap.stop="editShopPhone">
+                <view class="zan-cell__bd">门店电话</view>
+                <view class="zan-cell__ft">{{storeInfo.storePhoneNumber}}</view>
+            </view>
+            <view class="zan-cell zan-cell--access" @tap.stop="editPostCode">
+                <view class="zan-cell__bd">邮编</view>
+                <view class="zan-cell__ft">{{storeInfo.postCode}}</view>
+            </view>
+        </view>
+
+        <view class="zan-panel">
+            <view class="zan-cell zan-cell--access" @tap.stop="editDeliveryAddr">
+                <view class="zan-cell__bd">收货地址管理</view>
+                <view class="zan-cell__ft">{{storeInfo.deliveryAddrType}}</view>
+            </view>
+        </view>
+
+    </view>
 </template>
 
 <script>
     import wepy from 'wepy'
 
     export default class Index extends wepy.page {
-        data = {}
+        data = {
+            userInfo: {
+                nickName: '加载中...'
+            },
+            storeInfo: {
+                shopKeeper: "我是谁",
+                shopName: "张记五金店",
+                shopAddress: "我我我我在哪我也不知道我在哪啊那就乱走吧反正也无所谓",
+                keeperPhoneNumber: "13888888888",
+                storePhoneNumber: "020-8888888",
+                postCode: "511400",
+                deliveryAddrType: "店铺地址"
+            }
+        }
         computed = {}
-        methods = {}
+        methods = {
+            editShopKeeperName(){
+                wx.navigateTo({
+                    url: '/simplePages/editShopKeeperName'
+                })
+            },
+            editShopKeeperPhone(){
+                wx.navigateTo({
+                    url: '/simplePages/editShopKeeperPhone'
+                })
+            },
+            editShopName(){
+                wx.navigateTo({
+                    url: '/simplePages/editShopName'
+                })
+            },
+            editShopAddr(){
+                wx.navigateTo({
+                    url: '/simplePages/editShopAddr'
+                })
+            },
+            editShopPhone(){
+                wx.navigateTo({
+                    url: '/simplePages/editShopPhone'
+                })
+            },
+            editPostCode(){
+                wx.navigateTo({
+                    url: '/simplePages/editShopPhone'
+                })
+            },
+            editDeliveryAddr(){
+                wx.navigateTo({
+                    url: '/simplePages/editDeliveryAddr'
+                })
+            }
+
+        };
+
 
         onLoad() {
-
+            let that = this;
+            this.$parent.getUserInfo(function (userInfo) {
+                if (userInfo) {
+                    that.userInfo = userInfo
+                }
+                console.log(userInfo)
+                that.$apply()
+            })
         }
     }
 </script>
 
 <style scoped>
+    @import '/components/zanui/cell.wxss';
+    @import '/components/zanui/icon.wxss';
+    .userinfo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .userinfo-avatar {
+        width: 80rpx;
+        height: 80rpx;
+        border-radius: 50%;
+    }
+
+    .userinfo-nickname {
+        color: #aaa;
+    }
+
+    .doc-title{
+        position: relative;
+        padding: 20px 0;
+        margin: 10px 15px;
+        line-height: 24px;
+        font-size: 22px;
+        color: #666;
+        text-align: left;
+        width: 50%;
+        padding-left: 40px;
+    }
+
+    .zan-cell:active{
+        background-color: #f1f1f1;
+    }
 
 </style>
