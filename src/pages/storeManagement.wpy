@@ -97,7 +97,7 @@
             },
             editPostCode(){
                 wx.navigateTo({
-                    url: '/simplePages/editShopPhone'
+                    url: '/simplePages/editPostCode'
                 })
             },
             editDeliveryAddr(){

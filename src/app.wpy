@@ -28,6 +28,11 @@
                 "pages/purchaseOrders",
                 "simplePages/editShopKeeperName",
                 "simplePages/editShopKeeperPhone",
+                "simplePages/editShopName",
+                "simplePages/editShopPhone",
+                "simplePages/editPostCode",
+                "simplePages/editShopAddr",
+                "simplePages/editDeliveryAddr",
             ],
             window: {
                 "backgroundTextStyle": "light",

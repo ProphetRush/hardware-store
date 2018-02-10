@@ -1,0 +1,141 @@
+<template>
+    <view class="doc-title zan-hairline--bottom">修改店铺信息</view>
+    <view class="zan-panel-title">设置采购默认收货地址</view>
+    <view class="zan-panel">
+        <view class="zan-cell"  @tap="useShopAddr">
+            <view class="zan-cell__icon zan-icon {{useShopAddrChecked?'zan-icon-checked':''}}" style="color:red"></view>
+            <view class="zan-cell__bd">使用店铺地址</view>
+        </view>
+        <view class="zan-cell"   @tap="useCustomAddr">
+            <view class="zan-cell__icon zan-icon {{showCustomAddr?'zan-icon-checked':''}}" style="color:red"></view>
+            <view class="zan-cell__bd">使用自定义地址</view>
+        </view>
+        <view class="zan-panel {{showCustomAddr?'':'hidden'}}">
+            <view class="zan-cell zan-cell--access"  style="height: 80rpx" @tap="openAddressPicker">
+                <view class="zan-cell__bd">所在地区</view>
+                <view class="zan-cell__ft">{{province ? province.name : '省'}} - {{city ? city.name : '市' }} - {{area ? area.name : '区' }}</view>
+            </view>
+            <areaPicker @areaArray.user="areaPickerArray"></areaPicker>
+            <field :options="detailedAddr"  componentId="detailedAddr"></field>
+        </view>
+    </view>
+
+    <view class="zan-btns">
+        <button
+            class="zan-btn zan-btn--primary"
+            @tap="submit">提交修改</button>
+    </view>
+    <zanToast style="margin-bottom: 50px"></zanToast>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import Field from '../components/zan-components/zan-field'
+    import zanToast from '../components/zan-components/zan-toast'
+    import AreaPicker from '../components/areaPicker'
+    export default class Index extends wepy.page {
+        data = {
+            detailedAddr: {
+                title: '详细地址',
+                type: 'textarea',
+                placeholder: '请输入详细地址'
+            },
+            shopPostCode: "",
+            province: '',
+            city: '',
+            area: '',
+            provinceCode: '',
+            cityCode: '',
+            areaCode: '',
+            detailAddr: '',
+            useShopAddrChecked: true,
+            showCustomAddr: false,
+        }
+        components = {
+            field: Field,
+            zanToast,
+            areaPicker: AreaPicker
+        };
+        computed = {}
+        methods = {
+            submit(){
+                var that=this;
+                setTimeout(()=>{
+                    if(that.detailAddr !== "" && that.detailAddr.length<20){
+                        console.log(that.detailAddr)
+                    }else{
+                        that.$invoke('zanToast', 'showZanToast', { title: '地址格式不对！请重新输入！', timeout: 2000 })
+                    }
+                },100)
+            },
+            openAddressPicker() {
+                this.$invoke('areaPicker', 'openAddressPicker');
+            },
+
+            areaPickerArray(province, city, area) {
+                this.province = province;
+                this.city = city;
+                this.area = area;
+                this.provinceCode = province.code;
+                this.cityCode = city.code;
+                this.areaCode = area.code;
+                this.$apply();
+            },
+
+            useCustomAddr(){
+                this.useShopAddrChecked = false;
+                this.showCustomAddr = true;
+                this.$apply();
+            },
+
+            useShopAddr(){
+                this.useShopAddrChecked = true;
+                this.showCustomAddr = false;
+                this.$apply();
+            }
+        };
+
+
+
+
+
+
+        onShow() {
+            console.log("========editInfo==========");
+
+            this.province = { code: '120000', name: '天津市' };
+            this.city = { code: '120100', name: '天津市' };
+            this.area = { code: '120101', name: '和平区' };
+            this.$invoke('areaPicker', 'setAddressPickerValue', this.province, this.city, this.area);
+
+
+        }
+
+        events = {
+            zanFieldBlur(e) {
+                this.detailAddr = e.detail.value.trim();
+                this.$apply();
+            }
+        }
+    }
+</script>
+
+<style scoped>
+    @import '/components/zanui/panel.wxss';
+    @import '/components/zanui/btn.wxss';
+    .doc-title{
+        position: relative;
+        padding: 20px 0;
+        margin: 10px 15px;
+        line-height: 24px;
+        font-size: 22px;
+        color: #666;
+        text-align: left;
+        width: 50%;
+        padding-left: 40px;
+    }
+
+    .hidden{
+        display:none
+    }
+</style>

@@ -1,8 +1,8 @@
 <template>
     <view class="doc-title zan-hairline--bottom">修改店铺信息</view>
-    <view class="zan-panel-title">店主姓名</view>
+    <view class="zan-panel-title">店铺名称(4~10个字符)</view>
     <view class="zan-panel">
-        <field :options="spNameField"  componentId="spNameField"></field>
+        <field :options="sNameField"  componentId="sNameField"></field>
     </view>
     <view class="zan-btns">
         <button
@@ -18,10 +18,10 @@
     import zanToast from '../components/zan-components/zan-toast'
     export default class Index extends wepy.page {
         data = {
-            spNameField: {
-                placeholder: '请输入店主姓名',
+            sNameField: {
+                placeholder: '请输入店铺名称',
             },
-            shopKeeperName: "",
+            shopName: "",
         }
         components = {
             field: Field,
@@ -30,10 +30,10 @@
         computed = {}
         methods = {
             submit(e){
-                if(this.shopKeeperName !== "" && this.shopKeeperName.length<10){
-                    console.log(this.shopKeeperName)
+                if(this.shopName.length>=4 && this.shopName.length<10){
+                    console.log(this.shopName)
                 }else{
-                    this.$invoke('zanToast', 'showZanToast', { title: '名字格式不对！请重新输入！', timeout: 2000 })
+                    this.$invoke('zanToast', 'showZanToast', { title: '店铺名字格式不对！请重新输入！', timeout: 2000 })
                 }
 
             }
@@ -45,7 +45,7 @@
 
         events = {
             zanFieldBlur(e) {
-                this.shopKeeperName = e.detail.value.trim();
+                this.shopName = e.detail.value.trim();
                 this.$apply();
             }
         }
